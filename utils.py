@@ -227,9 +227,9 @@ def make_spect_plot(fname,save=False, plot_name='SAQ',nptf=16384, overlap=0.5, f
     delta=int(nptf-noverlap)
      
     tempfft=nptf/Fs 
-    print( 'tempo por fft:', tempfft,'segundos') 
+    print( 'tempo por fft: %.4f segundos' %tempfft) 
     reso=(Fs/(nptf))
-    print( 'resolução por bin:', reso, 'Hz')
+    print( 'resolução por bin  %.2f Hz:'  %reso)
     
     f=Fs/2*np.linspace(0,1,nptf/2+1)
     
