@@ -1,3 +1,5 @@
 jupyter contrib nbextension install --user
 jupyter nbextension enable --py widgetsnbextension
-
+jupyter nbextension enable Exercise
+jupyter nbextension enable Exercise2
+jupyter nbextension enable  collapsible_headings
