@@ -71,21 +71,16 @@ def setup_graph(title='', x_label='', y_label='',ylim=None, fig_size=None):
 
 #------------------------------------------------------------------------------------------------------------------
 
-def emissores_mapa():
+def emissores_mapa( emi_dict, limites = [-110,30,75,10]):
     # https://scitools.org.uk/cartopy/docs/latest/gallery/eyja_volcano.html
     fig = plt.figure(figsize=(12, 8))
-
-    lons = [13.883333,-3.278,9.733,2.567,1.250,7.617,-67.283,-98.333,27.317,-22.467,-67.183,14.436]
-    lats = [66.966667,54.900,40.917,48.550,46.717,53.083,44.650,46.367,37.417,63.850,18.400,37.126]
-    
-    nomes=['JNX','GBZ','ICV','FTA','HWU','DHO34','NAA','NML','TBB','TFK','NAU','NSY']
-
 
     ax = fig.add_subplot(1, 1, 1,
                          projection=ccrs.PlateCarree())
     
-    ax.set_extent([-110,30,75,10], ccrs.PlateCarree())
-
+    ax.set_extent(limites, ccrs.PlateCarree())
+    lons = [x[1] for x in emi_dict.values()]
+    lats = [x[0] for x in emi_dict.values()]
     ax.scatter(lons, lats, c='r', lw=3)
     ax.stock_img()
     ax.add_feature(cfeature.BORDERS)
@@ -100,9 +95,9 @@ def emissores_mapa():
     geodetic_transform = ccrs.Geodetic()._as_mpl_transform(ax)
     text_transform = offset_copy(geodetic_transform, units='dots', x=-15)
 
-    for k in range(len(nomes)):
+    for name,coord in emi_dict.items():
     # Add text 15 pixels to the left of point.
-        ax.text(lons[k], lats[k], nomes[k],
+        ax.text(coord[1], coord[0], name,
                 verticalalignment='center', horizontalalignment='right',
                 transform=text_transform,
                 bbox=dict(facecolor='sandybrown', alpha=0.7, boxstyle='round'))
@@ -110,7 +105,7 @@ def emissores_mapa():
     plt.show()
 
 
-def mapa_2pontos(origin, destination, nomes=['Arada','DCF77']):
+def mapa_2pontos(origin, destination, nomes = ['Arada','DCF77'], limites = [-110,30,75,10]):
     # https://scitools.org.uk/cartopy/docs/latest/gallery/eyja_volcano.html
     fig = plt.figure(figsize=(12, 8))
 
@@ -130,7 +125,7 @@ def mapa_2pontos(origin, destination, nomes=['Arada','DCF77']):
     ax.coastlines()
     ax.gridlines()
     
-    ax.set_extent([-110,30,75,10], ccrs.PlateCarree())
+    ax.set_extent(limites, ccrs.PlateCarree())
     ax.plot(lons, lats, c='r', lw=2, transform=ccrs.Geodetic())
 
     ax.scatter(lons, lats, c='r', lw=3)
@@ -153,51 +148,7 @@ def mapa_2pontos(origin, destination, nomes=['Arada','DCF77']):
         transform=text_transform,
         bbox=dict(facecolor='sandybrown', alpha=0.7, boxstyle='round'))
     plt.show()
-    
-    
-def mapa_2pontos_eur(origin, destination, nomes=['Arada','DCF77']):
-    # https://scitools.org.uk/cartopy/docs/latest/gallery/eyja_volcano.html
-    fig = plt.figure(figsize=(12, 8))
 
-    lat1, lon1 = origin
-    lat2, lon2 = destination
-
-    lons = [lon1, lon2]
-    lats = [lat1, lat2]
-
-
-    ax = fig.add_subplot(1, 1, 1,
-                         projection=ccrs.PlateCarree())
-    
-    ax.stock_img()
-    ax.add_feature(cfeature.BORDERS)
-
-    ax.coastlines()
-    ax.gridlines()
-    
-    ax.set_extent([-30,60,75,25], ccrs.PlateCarree())
-    ax.plot(lons, lats, c='r', lw=2, transform=ccrs.Geodetic())
-
-    ax.scatter(lons, lats, c='r', lw=3)
-
-    
-    # Use the cartopy interface to create a matplotlib transform object
-    # for the Geodetic coordinate system. We will use this along with
-    # matplotlib's offset_copy function to define a coordinate system which
-    # translates the text by 25 pixels to the left.
-    geodetic_transform = ccrs.Geodetic()._as_mpl_transform(ax)
-    text_transform = offset_copy(geodetic_transform, units='dots', x=-25)
-
-    # Add text 25 pixels to the left of the volcano.
-    ax.text(origin[1], origin[0], nomes[0],
-            verticalalignment='center', horizontalalignment='right',
-            transform=text_transform,
-            bbox=dict(facecolor='sandybrown', alpha=0.7, boxstyle='round'))
-    ax.text(destination[1], destination[0], nomes[1],
-        verticalalignment='center', horizontalalignment='right',
-        transform=text_transform,
-        bbox=dict(facecolor='sandybrown', alpha=0.7, boxstyle='round'))
-    plt.show()
 #------------------------------------------------------------------------------------------------------------------
 
 
