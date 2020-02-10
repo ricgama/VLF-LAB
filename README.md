@@ -2,11 +2,11 @@
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ricgama/VLF-LAB/master)
 
-
+![picture](media/saq.png)
 
 # Sobre
 
-Repositório de apoio à formação: "Atividades de Rádio na Sala de aula - Uma introdução à Ciência e Tecnologia em VLF" - [17º MatViseu](http://www.estgv.ipv.pt/17matviseu/)
+Repositório de apoio à formação: "Uma introdução à Ciência e Tecnologia em VLF"
 
 
 

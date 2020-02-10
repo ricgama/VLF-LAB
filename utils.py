@@ -190,17 +190,14 @@ def minhascoresH():
     minhasc = LinearSegmentedColormap('my_colormap',cdict,256)
     return minhasc
 
-def make_spect_plot(fname,save=False, plot_name='SAQ',nptf=16384, overlap=0.5, fmin=12000, fmax=30000):    
+def make_spect_plot(data, sample_rate, save=False, plot_name='SAQ', nptf=16384, overlap=0.5, fmin=12000, fmax=30000):    
 #==============================================================================
 #  read wav file
 #==============================================================================
-
-    sfo = sf.SoundFile(fname)
     
-    Fs=float(sfo.samplerate)
+    Fs = float(sample_rate)
     print( 'taxa de amostragem: %.1f amostras/segundo' %Fs) 
-    Tempgrav= float(len(sfo))/(Fs*60)
-    
+    Tempgrav= float(len(data))/(Fs*60)
     janela=np.hamming(nptf)
 
     noverlap=int(overlap*nptf)
@@ -213,11 +210,9 @@ def make_spect_plot(fname,save=False, plot_name='SAQ',nptf=16384, overlap=0.5, f
     
     f=Fs/2*np.linspace(0,1,nptf/2+1)
     
-    nblocks=int((len(sfo)-noverlap)/delta)
+    nblocks=int((len(data)-noverlap)/delta)
     evTemp=np.zeros((nblocks,int(nptf/2)+1))
-    
-    data = sfo.read()
-    
+        
     for i in tnrange(0,nblocks):  
        
         Pfft =abs(np.fft.rfft(janela*data[i*delta:i*delta+nptf]))/np.sqrt(nptf*np.dot(janela,janela)) 
@@ -272,16 +267,15 @@ def make_spect_plot(fname,save=False, plot_name='SAQ',nptf=16384, overlap=0.5, f
 
 
 
-def make_spect_plot_H(fname,save=False, plot_name='SAQ', nptf=16384, overlap=0.9, fmin=17000, fmax=18600, tmin=0.45, tmax=0.60):    
+def make_spect_plot_H(data, sample_rate,save=False, plot_name='SAQ', nptf=16384, overlap=0.9, fmin=17000, fmax=18600, tmin=0.45, tmax=0.60):    
 #==============================================================================
 #  read wav file
 #==============================================================================
 
-    sfo = sf.SoundFile(fname)
     
-    Fs=float(sfo.samplerate)
+    Fs=float(sample_rate)
     print( 'taxa de amostragem: %.1f amostras/segundo' %Fs) 
-    Tempgrav= float(len(sfo))/(Fs*60)
+    Tempgrav= float(len(data))/(Fs*60)
     
     janela=np.hamming(nptf)
 
@@ -295,11 +289,9 @@ def make_spect_plot_H(fname,save=False, plot_name='SAQ', nptf=16384, overlap=0.9
     
     f=Fs/2*np.linspace(0,1,nptf/2+1)
     
-    nblocks=int((len(sfo)-noverlap)/delta)
+    nblocks=int((len(data)-noverlap)/delta)
     evTemp=np.zeros((nblocks,int(nptf/2)+1))
-    
-    data = sfo.read()
-    
+        
     for i in tnrange(0,nblocks):  
        
         Pfft = 2*abs(np.fft.rfft(janela*data[i*delta:i*delta+nptf]))/np.sqrt(nptf*np.dot(janela,janela)) 
