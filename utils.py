@@ -208,7 +208,7 @@ def make_spect_plot(data, sample_rate, save=False, plot_name='SAQ', nptf=16384, 
     reso=(Fs/(nptf))
     print( 'resolução por bin  %.2f Hz:'  %reso)
     
-    f=Fs/2*np.linspace(0,1,nptf/2+1)
+    f=Fs/2*np.linspace(0,1,nptf//2+1)
     
     nblocks=int((len(data)-noverlap)/delta)
     evTemp=np.zeros((nblocks,int(nptf/2)+1))
@@ -287,7 +287,7 @@ def make_spect_plot_H(data, sample_rate,save=False, plot_name='SAQ', nptf=16384,
     reso=(Fs/(nptf))
     print( 'resolução por bin  %.2f Hz:'  %reso)
     
-    f=Fs/2*np.linspace(0,1,nptf/2+1)
+    f=Fs/2*np.linspace(0,1,nptf//2+1)
     
     nblocks=int((len(data)-noverlap)/delta)
     evTemp=np.zeros((nblocks,int(nptf/2)+1))
